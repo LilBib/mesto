@@ -20,4 +20,6 @@
 * Манипуляции с классами CSS через JavaScript
 * Элементы с реакцией на действия пользователя (реализовано при помощи метод addEventListener)
 
+**GH-pages**
+
 * [Ссылка на проект на gh-pages](https://lilbib.github.io/mesto/)
