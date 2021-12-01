@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Место</title>
+    <link rel="stylesheet" href="pages/index.css">
+</head>
+
+<body>
+    <div class="page">
+        <div class="popup">
+            <div class="popup__container">
+                <img src="images/close_icon.svg" class="popup__close-icon" alt="кретик закрыть">
+                <form class="form">
+                    <h2 class="form__title">Редактировать профиль</h2>
+                    <input type="text" class="form__item form__item-name">
+                    <div class="form__line"></div>
+                    <input type="text" class="form__item form__item-description">
+                    <div class="form__line"></div>
+                    <input type='submit' value='Сохранить' class='form__button'>
+                </form>
+            </div>
+        </div>
+        <header class="header">
+            <img src='images/_logo.svg' alt="Логотип проекта Место" class="header__logo"></img>
+            <div class="header__underline"></div>
+        </header>
+        <main>
+            <section class="profile">
+                <img src="images/jak_iv_kusto.jpg" alt="Аватар профиля" class="profile__avatar">
+                <div class="profile__content">
+                    <div class="profile__info">
+                        <h1 class="profile__title">Жак-Ив Кусто</h1>
+                        <img src="images/_button.svg" alt="Кнопка поп-апа" class="profile__edit-button">
+                        <h2 class="profile__description">Исследователь океана</h2>
+                    </div>
+                    <div class="profile__add-button"></div>
+                </div>
+            </section>
+            <section class="elements">
+                <div class="element">
+                    <img src="images/elbrus.png" class="element__card" alt="Первое фото из галереи">
+                    <div class="element__content">
+                        <p class="element__description">Эльбрус</p>
+                        <img src="images/like.svg" alt="кнопка лайка" class="element__like-button">
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="images/dombay.png" class="element__card" alt="Второе фото из галереи">
+                    <div class="element__content">
+                        <p class="element__description">Домбай</p>
+                        <img src="images/like.svg" alt="кнопка лайка" class="element__like-button">
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="images/cherkessiya.png" class="element__card" alt="Третье фото из галереи">
+                    <div class="element__content">
+                        <p class="element__description">Карачаевск</p>
+                        <img src="images/like.svg" alt="кнопка лайка" class="element__like-button">
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="images/fundy_trail_parkway_coastline.jpg" class="element__card"
+                        alt="Четвертое фото из галереи">
+                    <div class="element__content">
+                        <p class="element__description">Fundy trail parkway</p>
+                        <img src="images/like.svg" alt="кнопка лайка" class="element__like-button">
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="images/saint_john.jpg" class="element__card" alt="Пятое фото из галереи">
+                    <div class="element__content">
+                        <p class="element__description">Saint John</p>
+                        <img src="images/like.svg" alt="кнопка лайка" class="element__like-button">
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="images/thames_park.jpg" class="element__card" alt="Шестое фото из галереи">
+                    <div class="element__content">
+                        <p class="element__description">Thames Park</p>
+                        <img src="images/like.svg" alt="кнопка лайка" class="element__like-button">
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <span class="footer__copyright">© 2020 Mesto Russia</span>
+        </footer>
+    </div>
+    <script src="script/script.js"></script>
+</body>
+
+</html>
