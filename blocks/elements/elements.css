@@ -7,16 +7,16 @@
     max-width: 880px;
     margin: auto;
     padding-bottom: 67px;
-    justify-items: center;
+    justify-content: center;
 }
 @media screen and (min-width:680px) and (max-width:900px) {
     .elements {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2,282px);
     }
 }
 @media screen and (max-width:680px) {
     .elements {
-        grid-template-columns: repeat(1,1fr);
+        grid-template-columns: repeat(1,282px);
         padding-bottom: 48px;
     }
 }
