@@ -24,8 +24,6 @@ function formSubmitHandler (evt) {
     togglePopup();
 }
 function toggleLike(evt) {
-    console.log(evt);
-    console.log(evt.target);
     if (evt.target.getAttribute('src')==="images/like.svg") {
         evt.target.setAttribute('src',"images/like_active.svg");
         
