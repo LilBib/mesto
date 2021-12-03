@@ -1,5 +1,5 @@
 .popup__container {
-    position: absolute;
+    position: relative;
     left: 50%;
     top: 50vh;
     transform: translate(-50%, -50%);

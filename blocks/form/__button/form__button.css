@@ -12,6 +12,10 @@
     font-size: 18px;
     line-height: 22px;
     text-align: center;
+    cursor: pointer;
+}
+.form__button:hover {
+    opacity: .8;
 }
 @media screen and (max-width:550px) {
     .form__button {
