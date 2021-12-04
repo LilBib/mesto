@@ -10,22 +10,8 @@
 
 <body>
     <div class="page">
-        <div class="popup">
-            <div class="popup__container">
-                <button type="button" class="popup__close-icon"></button>
-                <form class="form">
-                    <h2 class="form__title">Редактировать профиль</h2>
-                    <input type="text" class="form__item form__item-name">
-                    <div class="form__line"></div>
-                    <input type="text" class="form__item form__item-description">
-                    <div class="form__line"></div>
-                    <input type='submit' value='Сохранить' class='form__button'>
-                </form>
-            </div>
-        </div>
         <header class="header">
-            <img src='images/_logo.svg' alt="Логотип проекта Место" class="header__logo">
-            <div class="header__underline"></div>
+            <img src="images/_logo.svg" alt="Логотип проекта Место" class="header__logo">
         </header>
         <main>
             <section class="profile">
@@ -88,6 +74,17 @@
         <footer class="footer">
             <span class="footer__copyright">© 2020 Mesto Russia</span>
         </footer>
+        <div class="popup">
+            <div class="popup__container">
+                <button type="button" class="popup__close-icon"></button>
+                <form name="edit-form" class="form">
+                    <h2 class="form__title">Редактировать профиль</h2>
+                    <input name="name" required placeholder="Ваш никнейм" type="text" class="form__item form__item_section_name">
+                    <input name="description" placeholder="Описание профиля" required type="text" class="form__item form__item_section_description">
+                    <input name="submit-button" type="submit" value="Сохранить" class="form__button">
+                </form>
+            </div>
+        </div>
     </div>
     <script src="script/script.js"></script>
 </body>
