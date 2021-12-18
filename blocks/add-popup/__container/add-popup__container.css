@@ -1,4 +1,4 @@
-.popup__container {
+.add-popup__container {
     position: relative;
     left: 50%;
     top: 50vh;
@@ -10,7 +10,7 @@
     z-index: 1;
 }
 @media screen and (max-width:550px) {
-    .popup__container {
+    .add-popup__container {
         width: 282px;
     }
 }

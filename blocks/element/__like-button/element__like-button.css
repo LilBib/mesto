@@ -5,6 +5,7 @@
     height: 19px;
     border: none;
     cursor: pointer;
+    padding-right: 16px;
 }
 .element__like-button:hover {
     opacity: .5;

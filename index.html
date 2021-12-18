@@ -26,57 +26,15 @@
                 </div>
             </section>
             <section class="elements">
-                <div class="element">
-                    <img src="images/elbrus.png" class="element__card" alt="Первое фото из галереи">
-                    <div class="element__content">
-                        <h2 class="element__description">Эльбрус</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img src="images/dombay.png" class="element__card" alt="Второе фото из галереи">
-                    <div class="element__content">
-                        <h2 class="element__description">Домбай</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img src="images/cherkessiya.png" class="element__card" alt="Третье фото из галереи">
-                    <div class="element__content">
-                        <h2 class="element__description">Карачаевск</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img src="images/fundy_trail_parkway_coastline.jpg" class="element__card"
-                        alt="Четвертое фото из галереи">
-                    <div class="element__content">
-                        <h2 class="element__description">Fundy trail parkway</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img src="images/saint_john.jpg" class="element__card" alt="Пятое фото из галереи">
-                    <div class="element__content">
-                        <h2 class="element__description">Saint John</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </div>
-                <div class="element">
-                    <img src="images/thames_park.jpg" class="element__card" alt="Шестое фото из галереи">
-                    <div class="element__content">
-                        <h2 class="element__description">Thames Park</h2>
-                        <button type="button" class="element__like-button"></button>
-                    </div>
-                </div>
+                
             </section>
         </main>
         <footer class="footer">
             <span class="footer__copyright">© 2020 Mesto Russia</span>
         </footer>
-        <div class="popup">
-            <div class="popup__container">
-                <button type="button" class="popup__close-icon"></button>
+        <div class="edit-popup">
+            <div class="edit-popup__container">
+                <button type="button" class="edit-popup__close-icon"></button>
                 <form name="edit-form" class="form">
                     <h2 class="form__title">Редактировать профиль</h2>
                     <input name="name" required placeholder="Ваш никнейм" type="text" class="form__item form__item_section_name">
@@ -85,7 +43,35 @@
                 </form>
             </div>
         </div>
+        <div class="add-popup">
+            <div class="add-popup__container">
+                <button type="button" class="add-popup__close-icon"></button>
+                <form name="add-form" class="add-form">
+                    <h2 class="form__title">Новое место</h2>
+                    <input name="place" required placeholder="Название" type="text" class="form__item form__item_section_place">
+                    <input name="link" placeholder="Ссылка на картинку" required type="text" class="form__item form__item_section_link">
+                    <input name="submit-button" type="submit" value="Сохранить" class="form__button">
+                </form>
+            </div>
+        </div>
+        <div class="card-popup">
+            <div class="card-popup__container">
+                <button type="button" class="card-popup__close-icon"></button>
+                <img class="card-popup__image">
+                <p class="card-popup__caption"></p>
+            </div>
+        </div>
     </div>
+    <template id="element">
+        <div class="element">
+            <img  class="element__card" alt="фото из галереи">
+            <div class="element__content">
+                <h2 class="element__description"></h2>
+                <button type="button" class="element__like-button"></button>
+                <button type="button" class="element__delete-button"></button>
+            </div>
+        </div>
+    </template>
     <script src="script/script.js"></script>
 </body>
 
