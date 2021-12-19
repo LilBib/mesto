@@ -32,10 +32,10 @@
         <footer class="footer">
             <span class="footer__copyright">© 2020 Mesto Russia</span>
         </footer>
-        <div class="edit-popup">
-            <div class="edit-popup__container">
-                <button type="button" class="edit-popup__close-icon"></button>
-                <form name="edit-form" class="form">
+        <div class="popup popup_assignment_edit">
+            <div class="popup__container">
+                <button type="button" class="popup__close-icon"></button>
+                <form name="form" class="form form_task_edit">
                     <h2 class="form__title">Редактировать профиль</h2>
                     <input name="name" required placeholder="Ваш никнейм" type="text" class="form__item form__item_section_name">
                     <input name="description" placeholder="Описание профиля" required type="text" class="form__item form__item_section_description">
@@ -43,22 +43,22 @@
                 </form>
             </div>
         </div>
-        <div class="add-popup">
-            <div class="add-popup__container">
-                <button type="button" class="add-popup__close-icon"></button>
-                <form name="add-form" class="add-form">
+        <div class="popup popup_assignment_add">
+            <div class="popup__container">
+                <button type="button" class="popup__close-icon"></button>
+                <form name="form" class="form form_task_add">
                     <h2 class="form__title">Новое место</h2>
                     <input name="place" required placeholder="Название" type="text" class="form__item form__item_section_place">
-                    <input name="link" placeholder="Ссылка на картинку" required type="text" class="form__item form__item_section_link">
+                    <input name="link" required placeholder="Ссылка на картинку" required type="text" class="form__item form__item_section_link">
                     <input name="submit-button" type="submit" value="Сохранить" class="form__button">
                 </form>
             </div>
         </div>
-        <div class="card-popup">
-            <div class="card-popup__container">
-                <button type="button" class="card-popup__close-icon"></button>
-                <img class="card-popup__image">
-                <p class="card-popup__caption"></p>
+        <div class="popup popup_assignment_card">
+            <div class="popup__container popup__container_assignment_card">
+                <button type="button" class="popup__close-icon"></button>
+                <img class="popup__image">
+                <p class="popup__caption"></p>
             </div>
         </div>
     </div>
