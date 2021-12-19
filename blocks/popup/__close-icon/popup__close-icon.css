@@ -9,6 +9,8 @@
     border: none;
     background-color: initial;
     cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .popup__close-icon:hover {
     opacity: .6;
