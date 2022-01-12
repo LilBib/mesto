@@ -48,7 +48,6 @@ const enableValidation = (config) => {
 
 const hasInvalidInput = (inputList) => {
   return inputList.some(input => {
-    console.log ();
     return !input.validity.valid;
   });
 }
