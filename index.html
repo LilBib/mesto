@@ -35,10 +35,12 @@
         <div class="popup popup_assignment_edit">
             <div class="popup__container">
                 <button type="button" class="popup__close-icon"></button>
-                <form name="form" class="form form_task_edit">
+                <form name="edit-form" class="form form_task_edit" novalidate>
                     <h2 class="form__title">Редактировать профиль</h2>
-                    <input name="name" required placeholder="Ваш никнейм" type="text" class="form__item form__item_section_name">
-                    <input name="description" placeholder="Описание профиля" required type="text" class="form__item form__item_section_description">
+                    <input id="profile-name" name="name" required minlength="2" maxlength="40" placeholder="Ваш никнейм" type="text" class="form__item form__item_section_name">
+                    <span class="profile-name-error form__item-error"></span>
+                    <input id="profile-description" name="description" minlength="2" max="200" placeholder="Описание профиля" required type="text" class="form__item form__item_section_description">
+                    <span class="profile-description-error form__item-error"></span>
                     <input name="submit-button" type="submit" value="Сохранить" class="form__button">
                 </form>
             </div>
@@ -46,10 +48,12 @@
         <div class="popup popup_assignment_add">
             <div class="popup__container">
                 <button type="button" class="popup__close-icon"></button>
-                <form name="form" class="form form_task_add">
+                <form name="add-form" class="form form_task_add" novalidate>
                     <h2 class="form__title">Новое место</h2>
-                    <input name="place" required  placeholder="Название" type="text" class="form__item form__item_section_place">
-                    <input name="link" required placeholder="Ссылка на картинку" type="text" class="form__item form__item_section_link">
+                    <input id="place-title-input" minlength="2" maxlength="30" name="place" required  placeholder="Название" type="text" class="form__item form__item_section_place">
+                    <span class="place-title-input-error form__item-error"></span>
+                    <input id="place-link-input" name="link" required placeholder="Ссылка на картинку" type="url" class="form__item form__item_section_link">
+                    <span class="place-link-input-error form__item-error"></span>
                     <input name="submit-button" type="submit" value="Сохранить" class="form__button">
                 </form>
             </div>
@@ -73,6 +77,7 @@
         </div>
     </template>
     <script src="script/script.js"></script>
+    <script src="script/validate.js"></script>
 </body>
 
 </html>

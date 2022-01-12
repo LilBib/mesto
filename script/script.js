@@ -39,12 +39,17 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
+  const popups = [cardPopup,editPopup,addPopup];
 
 function renderElements () {
     initialCards.forEach(function(item) {
         addElement(item.name, item.link);
     }); 
 }
+
+
+formName.value = profileTitle.textContent;
+formDescription.value = profileDescription.textContent;
 
 function createCard (name, link) {
   const cardTemplate = document.querySelector('#element').content;
@@ -72,23 +77,31 @@ function addElement (name, link) {
   const cardElement=createCard(name, link);
   elements.prepend(cardElement);   
 }
-
+function popupOverlayCallback(evt){
+  if (evt.target.classList.contains('popup')) {
+    closePopup();
+  }
+}
+function popupEscCallback(evt) {
+  if (evt.key=='Escape') {
+    closePopup();
+  }
+}
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-}
-
-function openEditPopup() {
-  formName.value = profileTitle.textContent;
-  formDescription.value = profileDescription.textContent;
-  openPopup(editPopup);
-}
+  popup.addEventListener('click',  popupOverlayCallback);
+  window.addEventListener('keydown', popupEscCallback );
+  }
 
 function closePopup() {
   const openedPopup = document.querySelector('.popup_opened')
   if (openedPopup) {
     openedPopup.classList.remove('popup_opened');
   }
-
+  popups.forEach(item => {
+    item.removeEventListener('click', popupOverlayCallback);
+    window.removeEventListener('keydown', popupEscCallback);
+  });
 }
 
 function editFormSubmitHandler(evt) {
@@ -109,13 +122,12 @@ function addFormSubmitHandler(evt) {
 renderElements();
 editFormElement.addEventListener('submit', editFormSubmitHandler);
 addFormElement.addEventListener('submit', addFormSubmitHandler);
-editPopupOpenButton.addEventListener('click', openEditPopup);
-addPopupOpenButton.addEventListener('click', () => {
-    openPopup(addPopup);
-  });
+editPopupOpenButton.addEventListener('click', ()=> {openPopup(editPopup)});
+addPopupOpenButton.addEventListener('click', () => {openPopup(addPopup)});
 popupCloseButtons.forEach(function (item){
   item.addEventListener('click', closePopup);
 });
 
-// Геннадий, спасибо за очень быстрое и качественное ревью!!=)
+
+
     
