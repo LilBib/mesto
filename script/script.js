@@ -52,7 +52,7 @@ formName.value = profileTitle.textContent;
 formDescription.value = profileDescription.textContent;
 
 function callbackOnError(evt) {
-  evt.target.setAttribute('src', 'images/imgonerror.png');
+  evt.target.setAttribute('src', './images/imgonerror.png');
 }
 
 function createCard (name, link) {
