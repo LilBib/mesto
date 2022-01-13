@@ -129,7 +129,8 @@ addFormElement.addEventListener('submit', addFormSubmitHandler);
 editPopupOpenButton.addEventListener('click', ()=> {openPopup(editPopup)});
 addPopupOpenButton.addEventListener('click', (evt) => {
   addFormElement.reset();
-  openPopup(addPopup)
+  disableAddButton();
+  openPopup(addPopup);
 });
 popupCloseButtons.forEach(function (item){
   item.addEventListener('click', closePopup);
