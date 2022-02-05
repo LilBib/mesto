@@ -1,3 +1,5 @@
+import { Card } from "./card.js";
+import {FormValidator} from "./validate.js";
 const editFormElement = document.querySelector('.form_task_edit');
 const addFormElement = document.querySelector('.form_task_add');
 const editPopupOpenButton = document.querySelector('.profile__edit-button');
@@ -39,11 +41,18 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
-  const popups = [cardPopup,editPopup,addPopup];
+const config = {
+  formSelector: '.form',
+  inputSelector: '.form__item',
+  submitButtonSelector: '.form__button',
+  inactiveButtonClass: 'form__button_disabled',
+  inputErrorClass: 'form__item_type_error',
+  errorClass: 'form__item-error_active'
+}
 
 function renderElements () {
-    initialCards.forEach(function(item) {
-        addElement(item.name, item.link);
+    initialCards.forEach((item) => {
+        addElement(item);
     }); 
 }
 
@@ -51,57 +60,33 @@ function renderElements () {
 formName.value = profileTitle.textContent;
 formDescription.value = profileDescription.textContent;
 
-function callbackOnError(evt) {
-  evt.target.setAttribute('src', './images/imgonerror.png');
-}
 
-function createCard (name, link) {
-  const cardTemplate = document.querySelector('#element').content;
-  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-  const imgElement = cardElement.querySelector('.element__card');
-  const popupImage = cardPopup.querySelector('.popup__image');
-  imgElement.src = link;
-  cardElement.querySelector('.element__description').textContent=name;
-  imgElement.setAttribute("alt",`${name}`);
-  imgElement.addEventListener('error', callbackOnError);
 
-  cardElement.querySelector('.element__like-button').addEventListener('click', function(evt){
-      evt.target.classList.toggle('element__like-button_active');
-  });
-  cardElement.querySelector('.element__delete-button').addEventListener('click', function(evt){
-      evt.target.closest('.element').remove();
-  });
-  imgElement.addEventListener('click', function(evt){
-      openPopup(cardPopup);
-      popupImage.setAttribute('src',link);
-      cardPopup.querySelector('.popup__caption').textContent=name;
-      popupImage.setAttribute("alt",`${name}`);
-      popupImage.addEventListener('error', callbackOnError);
-  });
-  return cardElement;
-}
-
-function addElement (name, link) {
-  const cardElement = createCard(name, link);
+function addElement (data) {
+  const card = new Card(data, '#element');
+  const cardElement = card.generateCard()
   elements.prepend(cardElement);   
 }
+
 function popupOverlayCallback(evt){
   if (evt.target.classList.contains('popup')) {
     closePopup();
   }
 }
+
 function popupEscCallback(evt) {
   if (evt.key == 'Escape') {
     closePopup();
   }
 }
-function openPopup(popup) {
+
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   popup.addEventListener('click',  popupOverlayCallback);
   window.addEventListener('keydown', popupEscCallback );
   }
 
-function closePopup() {
+export function closePopup() {
   const openedPopup = document.querySelector('.popup_opened')
   if (openedPopup) {
     openedPopup.classList.remove('popup_opened');
@@ -119,15 +104,25 @@ function editFormSubmitHandler(evt) {
 
 function addFormSubmitHandler(evt) {
     evt.preventDefault();
-    addElement(formPlace.value,formLink.value);
+    console.log(formPlace.value);
+    addElement({name: formPlace.value,link: formLink.value});
     closePopup();
 }
+function disableAddButton() {
+  const buttonElement = document.querySelector('.form__button_type_add');
+  buttonElement.classList.add('form__button_disabled');
+  buttonElement.setAttribute('disabled', 'disabled');
+};
+
+const editFormValidator = new FormValidator(config,editFormElement);
+const addFormValidator = new FormValidator(config, addFormElement);
+
 
 renderElements();
 editFormElement.addEventListener('submit', editFormSubmitHandler);
 addFormElement.addEventListener('submit', addFormSubmitHandler);
 editPopupOpenButton.addEventListener('click', ()=> {openPopup(editPopup)});
-addPopupOpenButton.addEventListener('click', (evt) => {
+addPopupOpenButton.addEventListener('click', () => {
   addFormElement.reset();
   disableAddButton();
   openPopup(addPopup);
@@ -135,3 +130,5 @@ addPopupOpenButton.addEventListener('click', (evt) => {
 popupCloseButtons.forEach(function (item){
   item.addEventListener('click', closePopup);
 });
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
