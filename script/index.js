@@ -98,13 +98,13 @@ function editFormSubmitHandler(evt) {
     evt.preventDefault();
     profileTitle.textContent = formName.value;
     profileDescription.textContent = formDescription.value;
-    closePopup();
+    closeOpenedPopup();
 }
 
 function addFormSubmitHandler(evt) {
     evt.preventDefault();
     addElement({name: formPlace.value,link: formLink.value});
-    closePopup();
+    closeOpenedPopup();
 }
 function disableAddButton() {
   const buttonElement = document.querySelector('.form__button_type_add');
