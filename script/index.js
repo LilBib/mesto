@@ -103,7 +103,6 @@ function editFormSubmitHandler(evt) {
 
 function addFormSubmitHandler(evt) {
     evt.preventDefault();
-    console.log(formPlace.value);
     addElement({name: formPlace.value,link: formLink.value});
     closePopup();
 }
