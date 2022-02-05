@@ -106,15 +106,9 @@ function addFormSubmitHandler(evt) {
     addElement({name: formPlace.value,link: formLink.value});
     closeOpenedPopup();
 }
-function disableAddButton() {
-  const buttonElement = document.querySelector('.form__button_type_add');
-  buttonElement.classList.add('form__button_disabled');
-  buttonElement.setAttribute('disabled', 'disabled');
-};
 
 const editFormValidator = new FormValidator(config,editFormElement);
 const addFormValidator = new FormValidator(config, addFormElement);
-
 
 renderElements();
 editFormElement.addEventListener('submit', editFormSubmitHandler);
