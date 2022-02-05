@@ -17,6 +17,11 @@ export class Card {
         this._element.querySelector('.element__card').setAttribute('src', './images/imgonerror.png');
     }
 
+    _popupCallbackOnError () {
+        popupImage.src="./images/imgonerror.png";
+        popupImage.setAttribute('alt',`img loading error`);
+    }
+
     _setEventListeners() {
         this._element.querySelector('.element__card').addEventListener('click',()=>{
             this._openPopup();});
@@ -26,6 +31,9 @@ export class Card {
             evt.target.closest('.element').remove();
         });
         this._element.querySelector('.element__like-button').addEventListener('click', this._like);
+        popupImage.addEventListener('error',()=>{
+            this._popupCallbackOnError();
+        });
     }
 
     _like(evt) {
