@@ -1,5 +1,5 @@
 import { Card } from "./Card.js";
-import {FormValidator} from "./Validate.js";
+import {FormValidator} from "./FormValidator.js";
 const editFormElement = document.querySelector('.form_task_edit');
 const addFormElement = document.querySelector('.form_task_add');
 const editPopupOpenButton = document.querySelector('.profile__edit-button');
