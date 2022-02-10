@@ -1,11 +1,14 @@
-import {openPopup,closePopup} from './index.js'
+import errorImage from "./images/imgonerror.png";
 const popupImage = document.querySelector('.popup__image');
 const cardPopup = document.querySelector('.popup_assignment_card');
+
 export class Card {
-    constructor(data, templateSelector) {
+    constructor({data, handleCardClick, handleErrorCardClick}, templateSelector) {
         this._name=data.name;
         this._link=data.link;
         this._templateSelector=templateSelector;
+        this._handleCardClick= handleCardClick;
+        this._handleErrorCardClick = handleErrorCardClick;
     }
 
     _getTemplate() {
@@ -14,17 +17,17 @@ export class Card {
     }
 
     _callbackOnError () {
-        this._element.querySelector('.element__card').setAttribute('src', './images/imgonerror.png');
+        this._element.querySelector('.element__card').setAttribute('src', errorImage);
     }
 
     _popupCallbackOnError () {
-        popupImage.src="./images/imgonerror.png";
+        popupImage.src=errorImage;
         popupImage.setAttribute('alt',`img loading error`);
     }
 
     _setEventListeners() {
         this._element.querySelector('.element__card').addEventListener('click',()=>{
-            this._openPopup();});
+            this._handleCardClick();});
         this._element.querySelector('.element__card').addEventListener('error', ()=>{
             this._callbackOnError()});
         this._element.querySelector('.element__delete-button').addEventListener('click', function(evt){
@@ -32,7 +35,7 @@ export class Card {
         });
         this._element.querySelector('.element__like-button').addEventListener('click', this._like);
         popupImage.addEventListener('error',()=>{
-            this._popupCallbackOnError();
+            this._handleErrorCardClick();
         });
     }
 
