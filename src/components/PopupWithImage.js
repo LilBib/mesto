@@ -1,5 +1,5 @@
 import {Popup} from "./Popup.js"
-import errorImage from "./images/imgonerror.png";
+import errorImage from "../images/imgonerror.png";
 export class PopupWithImage extends Popup {
     constructor(popupSelector) {
         super(popupSelector);

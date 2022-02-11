@@ -1,4 +1,4 @@
-import errorImage from "./images/imgonerror.png";
+import errorImage from "../images/imgonerror.png";
 const popupImage = document.querySelector('.popup__image');
 const cardPopup = document.querySelector('.popup_assignment_card');
 
