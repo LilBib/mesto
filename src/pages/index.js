@@ -48,14 +48,14 @@ const userInfo = new UserInfo({
 const editPopup = new PopupWithForm('.popup_assignment_edit','.form_task_edit'
 , (evt)=>{
   evt.preventDefault();
-  userInfo.setUserInfo(editPopup.getInputValues()[0], editPopup.getInputValues()[1]);
+  userInfo.setUserInfo(editPopup._getInputValues()[0], editPopup._getInputValues()[1]);
   editPopup.close();
 })
 
 const addPopup = new PopupWithForm('.popup_assignment_add','.form_task_add',
 (evt)=>{
   evt.preventDefault();
-  cardSection.renderer({name: addPopup.getInputValues()[0], link: addPopup.getInputValues()[1]});
+  cardSection.renderer({name: addPopup._getInputValues()[0], link: addPopup._getInputValues()[1]});
   addPopup.close();
 })
 
