@@ -55,7 +55,7 @@ const editPopup = new PopupWithForm('.popup_assignment_edit','.form_task_edit'
 const addPopup = new PopupWithForm('.popup_assignment_add','.form_task_add',
 (evt)=>{
   evt.preventDefault();
-  cardSection.renderer({name: formPlace.value, link: formLink.value});
+  cardSection.renderer({name: addPopup.getInputValues()[0], link: addPopup.getInputValues()[1]});
   addPopup.close();
 })
 
