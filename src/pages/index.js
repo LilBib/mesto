@@ -88,9 +88,9 @@ const userInfo = new UserInfo({
 const avatarEditPopup = new PopupWithForm('.popup_assignment_avatar-edit', '.form_task_avatar-edit'
   , (evt) => {
     evt.preventDefault();
+    document.querySelector('.form__button_type_avatar-edit').value="Cохранение...";
     api.patchAvatarInfo(avatarEditPopup.getInputValues()[0]).then((res)=> {
       if(res.ok) {
-        document.querySelector('.form__button_type_avatar-edit').value="Cохранение...";
         userInfo.setUserAvatar(avatarEditPopup.getInputValues()[0]);
       }
       else{
@@ -108,24 +108,24 @@ const avatarEditPopup = new PopupWithForm('.popup_assignment_avatar-edit', '.for
 const editPopup = new PopupWithForm('.popup_assignment_edit', '.form_task_edit'
   , (evt) => {
     evt.preventDefault();
+    document.querySelector('.form__button_type_edit').value="Cохранение...";
     api.patchUserInfo(editPopup.getInputValues()[0], editPopup.getInputValues()[1])
       .then(()=>{
-        document.querySelector('.form__button_type_avatar-edit').value="Cохранение...";
         userInfo.setUserInfo(editPopup.getInputValues()[0], editPopup.getInputValues()[1])
       })
       .catch((err)=> {console.log(err)})
       .finally(()=> {
         editPopup.close();
-        document.querySelector('.form__button_type_avatar-edit').value="Cохранить";
+        document.querySelector('.form__button_type_edit').value="Cохранить";
       })
   })
 
 const addPopup = new PopupWithForm('.popup_assignment_add', '.form_task_add',
   (evt) => {
     evt.preventDefault();
+    document.querySelector('.form__button_type_add').value="Cоздание..."
     api.postNewCard(addPopup.getInputValues()[0], addPopup.getInputValues()[1])
         .then((res) => {
-          document.querySelector('.form__button_type_add').value="Cоздание..."
           cardSection.newCardRenderer({link: res.link,name: res.name, likes: res.likes, cardID: res._id, owner: res.owner._id});
         })
         .catch((err)=>{console.log(err)})
