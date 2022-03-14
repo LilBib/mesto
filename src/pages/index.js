@@ -6,23 +6,34 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import './index.css';
+import errorImage from "../images/imgonerror.png";
 import { editFormElement, addFormElement,avatarEditFormElement, editPopupOpenButton, addPopupOpenButton, formName, formDescription,avatar, config } from '../utils/constants.js';
-
-
-const imagePopup = new PopupWithImage(".popup_assignment_card");
-
-
 
 const api = new Api({ baseURL: 'https://mesto.nomoreparties.co/v1/cohort36', authorization: 'a4b67e43-7921-4ffc-97a3-90eb387a74ab' });
 
+let userID;
+api.getUserInfo()
+    .then((res)=>{return res._id})
+    .then((res)=>{userID=res})
+    .catch((err)=>{console.log(err)});
+
+
+const imagePopup = new PopupWithImage(".popup_assignment_card", errorImage);
+
+
+
+
+
 function createCard(item) {
   const card = new Card({
+    errorImage,
     data: item,
+    userID : userID,
     handleCardClick: () => {
       imagePopup.open(item.link, item.name);
     },
     handleDeleteButtonClick: () => {
-      const deletePopup = new PopupWithForm('.popup_assignment_delete', '.form_task_delete', 
+      let deletePopup = new PopupWithForm('.popup_assignment_delete', '.form_task_delete', 
         (evt) => {
           evt.preventDefault();
           api.deleteCard(item.cardID);
@@ -31,23 +42,17 @@ function createCard(item) {
         });
       deletePopup.open();
     },
-    handleLikeButtonClick: () => {
-      
-      if (!document.getElementById(`${item.cardID}`).childNodes[3].childNodes[3].childNodes[1].classList.contains('element__like-button_active')){
-        api.like(item.cardID).then((res)=>{
-          document.getElementById(`${item.cardID}`).childNodes[3].childNodes[3].childNodes[3].textContent=`${res.likes.length}`;
-        });
-      }
-      else {
-        api.unlike(item.cardID).then((res)=>{
-          document.getElementById(`${item.cardID}`).childNodes[3].childNodes[3].childNodes[3].textContent=`${res.likes.length}`;
-        });
-      }
-      document.getElementById(`${item.cardID}`).childNodes[3].childNodes[3].childNodes[1].classList.toggle('element__like-button_active');
-    },
     handleErrorCardClick: () => {
       imagePopup.openOnError();
-    }
+    },
+    likeRequest: () => {
+      if(!card.isLikedCurrently()){
+        return api.like(item.cardID)
+      }
+      else {
+        return api.unlike(item.cardID)
+      }
+    },
   }, '#element');
   const cardElement = card.generateCard();
   return cardElement;
@@ -65,7 +70,6 @@ const cardSection = new Section({
   }
 }, ".elements");
 
-cardSection.renderItems();
 
 
 
@@ -84,27 +88,52 @@ const userInfo = new UserInfo({
 const avatarEditPopup = new PopupWithForm('.popup_assignment_avatar-edit', '.form_task_avatar-edit'
   , (evt) => {
     evt.preventDefault();
-    api.patchAvatarInfo(avatarEditPopup._getInputValues()[0]);
-    userInfo.setUserAvatar(avatarEditPopup._getInputValues()[0]);
-    avatarEditPopup.close();
+    api.patchAvatarInfo(avatarEditPopup.getInputValues()[0]).then((res)=> {
+      if(res.ok) {
+        document.querySelector('.form__button_type_avatar-edit').value="Cохранение...";
+        userInfo.setUserAvatar(avatarEditPopup.getInputValues()[0]);
+      }
+      else{
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      }
+    }).catch((err)=>{console.log(err)})
+      .finally(() => {
+        avatarEditPopup.close();
+        document.querySelector('.form__button_type_avatar-edit').value="Cохранить";
+      });
+    
+    
   })
 
 const editPopup = new PopupWithForm('.popup_assignment_edit', '.form_task_edit'
   , (evt) => {
     evt.preventDefault();
-    api.patchUserInfo(editPopup._getInputValues()[0], editPopup._getInputValues()[1]);
-    userInfo.setUserInfo(editPopup._getInputValues()[0], editPopup._getInputValues()[1])
-    editPopup.close();
+    api.patchUserInfo(editPopup.getInputValues()[0], editPopup.getInputValues()[1])
+      .then(()=>{
+        document.querySelector('.form__button_type_avatar-edit').value="Cохранение...";
+        userInfo.setUserInfo(editPopup.getInputValues()[0], editPopup.getInputValues()[1])
+      })
+      .catch((err)=> {console.log(err)})
+      .finally(()=> {
+        editPopup.close();
+        document.querySelector('.form__button_type_avatar-edit').value="Cохранить";
+      })
   })
 
 const addPopup = new PopupWithForm('.popup_assignment_add', '.form_task_add',
   (evt) => {
     evt.preventDefault();
-    api.postNewCard(addPopup._getInputValues()[0], addPopup._getInputValues()[1])
+    api.postNewCard(addPopup.getInputValues()[0], addPopup.getInputValues()[1])
         .then((res) => {
+          document.querySelector('.form__button_type_add').value="Cоздание..."
           cardSection.newCardRenderer({link: res.link,name: res.name, likes: res.likes, cardID: res._id, owner: res.owner._id});
         })
-    addPopup.close();
+        .catch((err)=>{console.log(err)})
+        .finally(()=>{
+          addPopup.close();
+          document.querySelector('.form__button_type_add').value="Cоздать"
+        })
+    
   })
 
 function insertUserInfoIntoPopup() {
@@ -112,7 +141,8 @@ function insertUserInfoIntoPopup() {
     .then((res) => {
       formName.value = res.name;
       formDescription.value = res.about;
-    });
+    })
+    .catch((err)=>{console.log(err)});
 }
 
 api.setUserInfo();
@@ -133,3 +163,4 @@ avatar.addEventListener('click', () => {
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 avatarEditFormValidator.enableValidation();
+cardSection.renderItems();

@@ -1,20 +1,20 @@
-import errorImage from "../images/imgonerror.png";
 const popupImage = document.querySelector('.popup__image');
 const cardPopup = document.querySelector('.popup_assignment_card');
 
 export class Card {
-    constructor({data, handleCardClick,handleDeleteButtonClick,handleLikeButtonClick, handleErrorCardClick}, templateSelector) {
+    constructor({errorImage,data,userID, handleCardClick,handleDeleteButtonClick, handleErrorCardClick, likeRequest}, templateSelector) {
         this._name=data.name;
         this._link=data.link;
         this._likes = data.likes;
         this._cardID=data.cardID;
         this._cardOwner=data.owner;
-        this._myID='e729488d8993188bc53320a2';
+        this._userID=userID;
+        this._errorImage=errorImage;
         this._templateSelector=templateSelector;
         this._handleCardClick= handleCardClick;
         this._handleDeleteButtonClick = handleDeleteButtonClick;
-        this._handleLikeButtonClick = handleLikeButtonClick;
         this._handleErrorCardClick = handleErrorCardClick;
+        this._likeRequest=likeRequest;
     }
 
     _getTemplate() {
@@ -23,12 +23,23 @@ export class Card {
     }
 
     _callbackOnError () {
-        this._element.querySelector('.element__card').setAttribute('src', errorImage);
+        this._element.querySelector('.element__card').setAttribute('src', this._errorImage);
     }
 
-    _popupCallbackOnError () {
-        popupImage.src=errorImage;
-        popupImage.setAttribute('alt',`img loading error`);
+    isLiked () {
+        return (this._likes.some(like => {
+            return like._id===this._userID;
+        }))
+    }
+    isLikedCurrently () {
+        return this._element.querySelector('.element__like-button').classList.contains('element__like-button_active');
+    }
+
+    _handleLikeButtonClick () {
+        this._likeRequest()
+        .then((res)=>{this._element.querySelector('.element__like-count').textContent=`${res.likes.length}`})
+        .catch((err)=>{console.log(err)});
+        this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
     }
 
     _setEventListeners() {
@@ -38,7 +49,7 @@ export class Card {
             this._callbackOnError()});
         this._element.querySelector('.element__delete-button').addEventListener('click', (evt) => {
         this._handleDeleteButtonClick(evt)});
-        this._element.querySelector('.element__like-button').addEventListener('click', this._handleLikeButtonClick);
+        this._element.querySelector('.element__like-button').addEventListener('click', this._handleLikeButtonClick.bind(this));
         popupImage.addEventListener('error',()=>{
             this._handleErrorCardClick();
         });
@@ -58,14 +69,9 @@ export class Card {
     }
 
     _isOwner () {
-        return (this._cardOwner===this._myID);
+        return (this._cardOwner===this._userID);
     }
 
-    isLiked () {
-        return (this._likes.some(like => {
-            return like._id===this._myID;
-        }))
-    }
 
     generateCard() {
         this._element = this._getTemplate();
@@ -77,7 +83,7 @@ export class Card {
         this._setEventListeners();
         const isLiked = this.isLiked();
         if (isLiked) {
-            this._element.childNodes[3].childNodes[3].childNodes[1].classList.toggle('element__like-button_active');
+            this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
         }
         const isOwner=this._isOwner();
         if (!isOwner) {

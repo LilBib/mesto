@@ -17,5 +17,6 @@ export class Section {
                 this.renderer({link: item.link,name: item.name, likes: item.likes, cardID: item._id, owner: item.owner._id});
             })
         })
+        .catch((err)=>{console.log(err)})
     }
 }

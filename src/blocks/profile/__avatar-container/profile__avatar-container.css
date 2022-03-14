@@ -3,6 +3,7 @@
     border-radius: 60%;
     width: 120px;
     height: 120px;
+    cursor: pointer;
 }
 .profile__avatar-container:hover::after {
     position: absolute;

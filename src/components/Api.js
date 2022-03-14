@@ -2,9 +2,6 @@ export class Api {
     constructor(options) {
         this._baseURL = options.baseURL;
         this._authorization = options.authorization;
-        this._avatar = document.querySelector('.profile__avatar');
-        this._profileTitle = document.querySelector('.profile__title');
-        this._profileDescription = document.querySelector('.profile__description');
     }
     getInitialCards() {
         return fetch(`${this._baseURL}/cards`, {
@@ -12,8 +9,13 @@ export class Api {
                 authorization: `${this._authorization}`
             }
         }).then((res) => {
+            if (res.ok){
             return res.json();
-        })
+        }
+        else{
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      }
+            })
     }
     getUserInfo() {
         return fetch('https://mesto.nomoreparties.co/v1/cohort36/users/me', {
@@ -21,8 +23,13 @@ export class Api {
                 authorization: `${this._authorization}`
             }
         }).then((res) => {
+            if (res.ok){
             return res.json();
-        })
+        }
+        else{
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      }
+            })
     }
     setUserInfo() {
         fetch('https://mesto.nomoreparties.co/v1/cohort36/users/me', {
@@ -31,16 +38,22 @@ export class Api {
             }
         })
             .then((res) => {
+                if (res.ok){
                 return res.json();
+            }
+            else{
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      }
             })
             .then((res) => {
-                this._profileDescription.textContent = res.about;
-                this._profileTitle.textContent = res.name;
-                this._avatar.src = res.avatar;
+                document.querySelector('.profile__description').textContent = res.about;
+                document.querySelector('.profile__title').textContent = res.name;
+                document.querySelector('.profile__avatar').src = res.avatar;
             })
+            .catch((err)=>{console.log(err)})
     }
     patchUserInfo(userName, userAbout) {
-        fetch('https://mesto.nomoreparties.co/v1/cohort36/users/me', {
+        return fetch('https://mesto.nomoreparties.co/v1/cohort36/users/me', {
             method: 'PATCH',
             headers: {
                 authorization: `${this._authorization}`,
@@ -50,8 +63,14 @@ export class Api {
                 name: userName,
                 about: userAbout
             })
-        })
-    }
+        }).then((res) => {
+            if (res.ok){
+                return res.json();
+            }
+            else{
+                return Promise.reject(`Что-то пошло не так: ${res.status}`);
+            }
+        })}
 
     patchAvatarInfo (link) {
         return fetch('https://mesto.nomoreparties.co/v1/cohort36/users/me/avatar', {
@@ -78,7 +97,12 @@ export class Api {
                 link: link
             })
         }).then((res) => {
+            if (res.ok){
             return res.json();
+        }
+        else{
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      }
         })
     }
 
@@ -100,7 +124,14 @@ export class Api {
                 authorization: `${this._authorization}`,
                 'Content-Type': 'application/json'
             }
-        }).then(res=> {return res.json()})
+        }).then((res) => {
+            if (res.ok){
+            return res.json();
+        }
+        else{
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      }
+        })
     }
 
     unlike(id) {
@@ -110,18 +141,15 @@ export class Api {
                 authorization: `${this._authorization}`,
                 'Content-Type': 'application/json'
             }
-        }).then(res=> {return res.json()})
-    }
-    getLikesCount(id)
-    {
-        return fetch(`${this._baseURL}/cards/`, {
-            headers: {
-                authorization: `${this._authorization}`,
-                'Content-Type': 'application/json'
-            }
         }).then((res) => {
+            if (res.ok){
             return res.json();
+        }
+        else{
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+      }
         })
     }
+   
     
 }

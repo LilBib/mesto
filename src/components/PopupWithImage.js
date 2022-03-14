@@ -1,8 +1,8 @@
 import {Popup} from "./Popup.js"
-import errorImage from "../images/imgonerror.png";
 export class PopupWithImage extends Popup {
-    constructor(popupSelector) {
+    constructor(popupSelector,errorImage) {
         super(popupSelector);
+        this._errorImage=errorImage;
         this._popupImage = document.querySelector('.popup__image');
         this._popupCaption = document.querySelector('.popup__caption');
     }
@@ -14,7 +14,7 @@ export class PopupWithImage extends Popup {
     }
     openOnError() {
         super.open();
-        this._popupImage.src=errorImage;
+        this._popupImage.src=this._errorImage;
         this._popupImage.setAttribute('alt',`img loading error`);
     }
 }

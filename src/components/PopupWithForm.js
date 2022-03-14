@@ -12,13 +12,13 @@ export class PopupWithForm extends Popup {
     }
     removeEventListeners() {
         super.removeEventListeners();
-        this._form.addEventListener('submit', this._submitFormHandler);
+        this._form.removeEventListener('submit', this._submitFormHandler);
     }
     close() {
         super.close();
         this._form.reset();
     }
-    _getInputValues() {
+    getInputValues() {
         const inputValues=[];
         this._formInputs.forEach((input,i)=>{
             inputValues[i]=input.value;
