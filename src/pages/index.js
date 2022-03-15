@@ -30,11 +30,14 @@ const imagePopup = new PopupWithImage(".popup_assignment_card", errorImage);
 let deletePopup = new PopupWithForm('.popup_assignment_delete',
   (evt) => {
     evt.preventDefault();
-    api.deleteCard(deleteCardID).catch(err=>{console.log(err)});
-    document.getElementById(`${deleteCardID}`).remove();
-    deletePopup.close();
-    deleteCardID = null;
-  });
+    api.deleteCard(deleteCardID)
+      .then((res)=>{
+        document.getElementById(`${deleteCardID}`).remove();
+        deletePopup.close();
+        deleteCardID = null
+      })
+      .catch(err=>{console.log(err)});
+    });
 
 
 
