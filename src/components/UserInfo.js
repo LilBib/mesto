@@ -5,6 +5,10 @@ export class UserInfo {
         this._userAvatar = document.querySelector(userAvatarSelector)
     }
     
+    getUserInfo() {
+        const obj = {name:this._userName.textContent, description: this._userDescription.textContent};
+        return obj;
+    }
 
     setUserInfo(name, description) {
         this._userName.textContent = name;
