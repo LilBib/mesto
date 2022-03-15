@@ -5,18 +5,15 @@ export class PopupWithImage extends Popup {
         this._errorImage=errorImage;
         this._popupImage = this._popup.querySelector('.popup__image');
         this._popupCaption = this._popup.querySelector('.popup__caption');
+        this._openOnErrorBinded = this._openOnError.bind(this);
     }
     setEventListeners() {
         super.setEventListeners();
-        this._popupImage.addEventListener('error',()=>{
-            this._openOnError();
-        });
+        this._popupImage.addEventListener('error',()=>this._openOnErrorBinded);
     }
     removeEventListeners() {
         super.removeEventListeners();
-        this._popupImage.removeEventListener('error',()=>{
-            this._openOnError();
-        });
+        this._popupImage.removeEventListener('error',()=>this._openOnErrorBinded);
     }
     open(link, name) {
         super.open();

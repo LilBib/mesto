@@ -20,23 +20,27 @@ const api = new Api({
 let userID;
 let deleteCardID;
 let cardSection;
-
-
+const avatarSubmitButton = document.querySelector('.form__button_type_avatar-edit');
+const profileSubmitButton = document.querySelector('.form__button_type_edit');
+const newCardSubmitButton = document.querySelector('.form__button_type_add');
+const deleteCardSubmitButton = document.querySelector('.form__button_type_delete')
 
 
 const imagePopup = new PopupWithImage(".popup_assignment_card", errorImage);
 
 
-let deletePopup = new PopupWithForm('.popup_assignment_delete',
+const deletePopup = new PopupWithForm('.popup_assignment_delete',
   (evt) => {
     evt.preventDefault();
+    deleteCardSubmitButton.value = "Удаление..."; 
     api.deleteCard(deleteCardID)
       .then((res)=>{
         document.getElementById(`${deleteCardID}`).remove();
         deletePopup.close();
         deleteCardID = null
       })
-      .catch(err=>{console.log(err)});
+      .catch(err=>{console.log(err)})
+      .finally(()=>deleteCardSubmitButton.value = "Да");
     });
 
 
@@ -73,6 +77,8 @@ function createCard(item) {
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
     userID = userData._id;
+    userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar)
     cardSection = new Section({
       items: cards,
       renderer: (item) => {
@@ -105,9 +111,8 @@ const userInfo = new UserInfo({
 const avatarEditPopup = new PopupWithForm('.popup_assignment_avatar-edit',
   (evt) => {
     evt.preventDefault();
-    const avatarSubmitButton = document.querySelector('.form__button_type_avatar-edit');
     avatarSubmitButton.value = "Cохранение...";
-    let popupInputs = avatarEditPopup.getInputValues();
+    const popupInputs = avatarEditPopup.getInputValues();
     api.patchAvatarInfo(popupInputs.link).then((res) => {
       userInfo.setUserAvatar(popupInputs.link);
       avatarEditPopup.close();
@@ -124,16 +129,14 @@ const avatarEditPopup = new PopupWithForm('.popup_assignment_avatar-edit',
 const editPopup = new PopupWithForm('.popup_assignment_edit',
   (evt) => {
     evt.preventDefault();
-    const profileSubmitButton = document.querySelector('.form__button_type_edit');
+    
     profileSubmitButton.value = "Cохранение...";
-    let popupInputs = editPopup.getInputValues();
+    const popupInputs = editPopup.getInputValues();
     api.patchUserInfo(popupInputs.name, popupInputs.description)
       .then((res) => {
         userInfo.setUserInfo(popupInputs.name, popupInputs.description);
-        document.querySelector('.profile__description').textContent = res.about;
-        document.querySelector('.profile__title').textContent = res.name;
-        document.querySelector('.profile__avatar').src = res.avatar;
         editPopup.close();
+        return res;
       })
       .catch((err) => { console.log(err) })
       .finally(() => {
@@ -144,9 +147,9 @@ const editPopup = new PopupWithForm('.popup_assignment_edit',
 const addPopup = new PopupWithForm('.popup_assignment_add',
   (evt) => {
     evt.preventDefault();
-    const newCardSubmitButton = document.querySelector('.form__button_type_add')
+    
     newCardSubmitButton.value = "Cоздание...";
-    let popupInputs = addPopup.getInputValues()
+    const popupInputs = addPopup.getInputValues()
     api.postNewCard(popupInputs.place, popupInputs.link)
       .then((res) => {
         cardSection.newCardRenderer({ link: res.link, name: res.name, likes: res.likes, cardID: res._id, owner: res.owner._id });
@@ -160,17 +163,11 @@ const addPopup = new PopupWithForm('.popup_assignment_add',
   })
 
 function insertUserInfoIntoPopup() {
-  formName.value = userInfo.getUserInfo().name;
-  formDescription.value = userInfo.getUserInfo().description;
+  const {name, description} = userInfo.getUserInfo()
+  formName.value = name;
+  formDescription.value = description;
 }
 
-api.setUserInfo()
-  .then((res) => {
-    document.querySelector('.profile__description').textContent = res.about;
-    document.querySelector('.profile__title').textContent = res.name;
-    document.querySelector('.profile__avatar').src = res.avatar;
-  })
-  .catch((err) => { console.log(err) });
 
 editPopupOpenButton.addEventListener('click', () => {
   insertUserInfoIntoPopup();

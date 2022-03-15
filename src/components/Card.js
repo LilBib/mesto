@@ -13,8 +13,6 @@ export class Card {
         this._handleCardClick= handleCardClick;
         this._handleDeleteButtonClick = handleDeleteButtonClick;
         this._likeRequest=likeRequest;
-        this._popupImage = document.querySelector('.popup__image');
-        this._cardPopup = document.querySelector('.popup_assignment_card');
     }
 
     _getTemplate() {
