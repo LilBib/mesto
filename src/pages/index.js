@@ -46,8 +46,7 @@ const deletePopup = new PopupWithForm('.popup_assignment_delete',
 
 
 function createCard(item) {
-  const card = new Card({
-    errorImage,
+  const card = new Card(errorImage,{
     data: item,
     userID: userID,
     handleCardClick: () => {
@@ -56,9 +55,6 @@ function createCard(item) {
     handleDeleteButtonClick: () => {
       deleteCardID = item.cardID
       deletePopup.open();
-    },
-    handleErrorCardClick: () => {
-      imagePopup.openOnError();
     },
     likeRequest: () => {
       if (!card.isLikedCurrently()) {

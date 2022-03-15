@@ -7,18 +7,10 @@ export class PopupWithImage extends Popup {
         this._popupCaption = this._popup.querySelector('.popup__caption');
         this._openOnErrorBinded = this._openOnError.bind(this);
     }
-    setEventListeners() {
-        super.setEventListeners();
-        this._popupImage.addEventListener('error',()=>this._openOnErrorBinded);
-    }
-    removeEventListeners() {
-        super.removeEventListeners();
-        this._popupImage.removeEventListener('error',()=>this._openOnErrorBinded);
-    }
+
     open(link, name) {
         super.open();
         this._popupImage.src=link;
-        
         this._popupImage.setAttribute('alt',`${name}`);
         this._popupCaption.textContent=name;
     }
@@ -26,5 +18,13 @@ export class PopupWithImage extends Popup {
         super.open();
         this._popupImage.src=this._errorImage;
         this._popupImage.setAttribute('alt',`img loading error`);
+    }
+        setEventListeners() {
+        super.setEventListeners();
+        this._popupImage.addEventListener('error',this._openOnErrorBinded);
+    }
+    removeEventListeners() {
+        super.removeEventListeners();
+        this._popupImage.removeEventListener('error',this._openOnErrorBinded);
     }
 }

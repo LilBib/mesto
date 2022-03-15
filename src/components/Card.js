@@ -1,7 +1,7 @@
 
 
 export class Card {
-    constructor({errorImage,data,userID, handleCardClick,handleDeleteButtonClick, likeRequest}, templateSelector) {
+    constructor(errorImage,{data,userID, handleCardClick,handleDeleteButtonClick, likeRequest}, templateSelector) {
         this._name=data.name;
         this._link=data.link;
         this._likes = data.likes;
